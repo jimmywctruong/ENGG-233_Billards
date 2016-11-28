@@ -8,8 +8,6 @@ class Ball
   float x_vel;
   float y_vel;
 
-  boolean moving;
-
   Ball (float r, float x, float y, color co)
   {
     rad = r;
@@ -24,8 +22,8 @@ class Ball
   {
     center.x += x_vel;
     center.y += y_vel;
-
-    //if (x_vel > friction)
+    
+    //if (xvel > friction)
     //{
     //  center.x += x_vel;
     //  x_vel -= friction;
@@ -35,6 +33,14 @@ class Ball
     //  center.y += y_vel;
     //  y_vel -= friction;
     //}
+  }
+  boolean is_moving()
+  {
+    if ((x_vel !=0) || (y_vel != 0))
+    {
+      return true;
+    }
+    return false;
   }
   
   void display () 

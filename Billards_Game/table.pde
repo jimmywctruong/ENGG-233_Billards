@@ -15,7 +15,7 @@ class Table
   
   void draw()
   {
-    draw_table();
+    //draw_table();
     draw_balls();
     
   }
@@ -43,16 +43,19 @@ class Table
   
   void draw_rect (float border, float hole)
   {
-    fill(10, 108, 3);
-    strokeWeight(border);
-    
-    stroke(139, 69, 19);  //  Brown
-    rect(border/2, border/2, width - border, height - border);  //  Outer Border
-    stroke(58, 181, 3);
-    strokeWeight(border/2);
-    rect(border, border, width - (border*2), height - (border*2));  //  Green Inner Edge
     
     strokeWeight(0);
+    
+    fill(139, 69, 19);  //  Brown
+    rect(0, 0, width, height);  //  Brown Border
+    
+    fill(58, 181, 3); //  Light Green Trim
+    //strokeWeight(border/2);
+    rect(border, border, width - (border*2), height - (border*2));  //  Green Inner Edge
+    
+    fill(10, 108, 3); //  Dark Green
+    rect(border*4.0/3.0, border*4.0/3.0, width - 8.0/3.0*border, height - 8.0/3.0*border);
+    
     
   }
   void test ()
@@ -92,9 +95,9 @@ class Table
     popMatrix();
     
     
-    quad(width/2 - hole/2, .75*hole , width/2 + hole/2, .75*hole , width/2+.75*hole, 1.25*hole, width/2 - .75*hole, 1.25*hole);
+    quad(width/2 - hole/2, .75*hole , width/2 + hole/2, .75*hole , width/2+.75*hole, 1.5*hole, width/2 - .75*hole, 1.5*hole);
     
-    quad(width/2+.75*hole, height - 1.25*hole, width/2 - .75*hole, height - 1.25*hole, width/2 - hole/2, height - .75*hole , width/2 + hole/2, height - .75*hole );
+    quad(width/2+.75*hole, height - 1.5*hole, width/2 - .75*hole, height - 1.5*hole, width/2 - hole/2, height - .75*hole , width/2 + hole/2, height - .75*hole );
   }
   void draw_holes (float hole)
   {
@@ -107,6 +110,7 @@ class Table
     ellipse(width - hole, height - hole, hole, hole);
     //  Draw Middle Holes
     ellipse(width/2,      .75*hole,          hole, hole);
+    
     ellipse(width/2,      height - .75*hole, hole, hole);
   }
 }
