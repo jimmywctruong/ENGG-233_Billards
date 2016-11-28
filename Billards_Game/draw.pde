@@ -1,7 +1,9 @@
 void draw() 
 {
-  Table table = new Table (0);
-  table.display();
-  table.cue_ball.display();
 
+  table.draw();
+  draw_lines();
+  
+  physics();
+  //println(table.cue_ball.x_vel, table.cue_ball.y_vel);
 }

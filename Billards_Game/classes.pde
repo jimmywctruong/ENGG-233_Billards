@@ -1,33 +1,57 @@
-class Point
-{
-  float x, y;
-  Point (float a, float b)
-  {
-    x = a;
-    y = b;
-  }
-}
 class Ball
 {
   float rad;
   Point center;
   Point contact_point;
   color col;
-  //More code
+
+  float x_vel;
+  float y_vel;
 
   Ball (float r, float x, float y, color co)
   {
     rad = r;
     center = new Point (x, y);
     col = co;
+
+    x_vel = 0;
+    y_vel = 0;
   }
 
+  void move()
+  {
+    center.x += x_vel;
+    center.y += y_vel;
+    
+    //if (xvel > friction)
+    //{
+    //  center.x += x_vel;
+    //  x_vel -= friction;
+    //}
+    //if (y_vel > friction)
+    //{
+    //  center.y += y_vel;
+    //  y_vel -= friction;
+    //}
+  }
+  boolean is_moving()
+  {
+    if ((x_vel !=0) || (y_vel != 0))
+    {
+      return true;
+    }
+    return false;
+  }
+  
   void display () 
   {
     fill(col);
-    ellipse (center.x, center.y, rad, rad);
+    stroke (0);
+    strokeWeight(3);
+    ellipse (center.x, center.y, rad*2, rad*2);
   }
 }
+
 class Stick
 {
   Point start_p;
@@ -36,52 +60,12 @@ class Stick
   int length; //length of the pool stick
   //More code
 }
-class Table
+class Point
 {
-  Ball [] b_arr; //the length of this array can be 1 for
-  Ball cue_ball; //iteration 3
-  Stick st;
-  //More code
-  
-  Table (int balls)
+  float x, y;
+  Point (float a, float b)
   {
-    
-    cue_ball = new Ball (30, 400, 400, 255);
-    b_arr = new Ball [balls];
-    Stick st = new Stick ();
-  }
-  
-  void display() 
-  {
-    int border = 40;
-    int hole = 60;
-    
-    fill(10, 108, 3);
-    stroke(139, 69, 19);
-    strokeWeight(border);
-    
-    draw_rect (border);
-
-    
-    
-    draw_holes(hole);
-    
-  }
-  
-  void draw_holes (int hole)
-  {
-    stroke(0, 0);
-    fill(255);
-    
-    ellipse(hole,         hole,          hole, hole);
-    ellipse(width - hole, hole,          hole, hole);
-    ellipse(hole,         height - hole, hole, hole);
-    ellipse(width - hole, height - hole, hole, hole);
-    
-  }
-  
-  void draw_rect (int border)
-  {
-    rect(border/2, border/2, width - border, height - border);
+    x = a;
+    y = b;
   }
 }
