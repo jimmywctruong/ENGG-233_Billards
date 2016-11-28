@@ -2,6 +2,13 @@ void physics ()
 {
   // loop ball physics check
   move_balls();
+  check_collisions();
+  
+}
+
+void check_collisions()
+{
+  
   
   
 }
@@ -15,5 +22,6 @@ void move_balls()
     
   }
   
+  table.cue_ball.move();
   
 }

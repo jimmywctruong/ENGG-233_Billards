@@ -4,10 +4,10 @@ class Ball
   Point center;
   Point contact_point;
   color col;
-  
+
   float x_vel;
   float y_vel;
-    
+
   boolean moving;
 
   Ball (float r, float x, float y, color co)
@@ -15,27 +15,26 @@ class Ball
     rad = r;
     center = new Point (x, y);
     col = co;
-    
+
     x_vel = 0;
     y_vel = 0;
-    
   }
-  
+
   void move()
   {
     center.x += x_vel;
     center.y += y_vel;
-    
-    if (x_vel > friction)
-    {
-      x_vel -= friction;
-    }
-    
-    if (y_vel > friction)
-    {
-      y_vel -= friction;
-    }
-    
+
+    //if (x_vel > friction)
+    //{
+    //  center.x += x_vel;
+    //  x_vel -= friction;
+    //}
+    //if (y_vel > friction)
+    //{
+    //  center.y += y_vel;
+    //  y_vel -= friction;
+    //}
   }
   
   void display () 
@@ -45,8 +44,6 @@ class Ball
     strokeWeight(3);
     ellipse (center.x, center.y, rad*2, rad*2);
   }
-  
-  
 }
 
 class Stick

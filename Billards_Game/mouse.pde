@@ -14,10 +14,10 @@ void shoot_if()
   if (distance(mouseX, mouseY, table.cue_ball.center.x, table.cue_ball.center.y)
     < table.cue_ball.rad)
   {
-    table.cue_ball.x_vel = power*mouseX/distance(
+    table.cue_ball.x_vel = power*(table.cue_ball.center.x - mouseX)/distance(
       mouseX, mouseY, table.cue_ball.center.x, table.cue_ball.center.y);
       
-    table.cue_ball.y_vel = power*mouseY/distance(
+    table.cue_ball.y_vel = power*(table.cue_ball.center.x - mouseY)/distance(
       mouseX, mouseY, table.cue_ball.center.x, table.cue_ball.center.y);
       
     println("firing!");
