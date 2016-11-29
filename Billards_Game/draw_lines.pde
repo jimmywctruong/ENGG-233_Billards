@@ -1,13 +1,12 @@
-
 void draw_lines()
 {
   int step = 10;
   crosshairs(step);
-  collide_lines(step);
+  collide_lines();
   
 }
 
-void collide_lines(int step) 
+void collide_lines() 
 {
   stroke(255,0,0);
   
@@ -15,14 +14,10 @@ void collide_lines(int step)
   fill(0, 0);
   rect(80 - 2, 80 - 2, width - 2*(80 - 1), height - 2*(80 - 1));
   
-  
-  
-  
-  
 }
 void crosshairs(int step)
 {
-  for (int i = 0; i < width; i+= step)
+  for (int i = 0; i < width; i+= step)  //  Horizontal
   {
     if (i/step%2 == 0)
     {
@@ -31,7 +26,7 @@ void crosshairs(int step)
     }
   }
   
-  for (int i = 0; i < height; i+= step)
+  for (int i = 0; i < height; i+= step)  //  Vertical
   {
     if (i/step%2 == 0)
     {
