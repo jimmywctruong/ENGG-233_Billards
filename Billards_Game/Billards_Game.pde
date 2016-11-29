@@ -2,6 +2,7 @@
 Table table;
 int power;
 float friction;
+int border;  //  Wall border thickness
 
 boolean game_over;
 
@@ -13,11 +14,10 @@ void setup()
   frameRate(60);
   table = new Table (0);
   power = 5;
-<<<<<<< HEAD
+  border = 80;
+  
+  
   friction = 0.05;
-=======
-  friction = 0.5;
   game_over = false;
   
->>>>>>> refs/remotes/origin/main
 }

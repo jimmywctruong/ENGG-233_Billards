@@ -7,6 +7,8 @@ class Ball
 
   float x_vel;
   float y_vel;
+  
+  boolean ignore_walls;
 
   Ball (float r, float x, float y, color co)
   {
@@ -17,6 +19,8 @@ class Ball
 
     x_vel = 0;
     y_vel = 0;
+    
+    ignore_walls = false;
   }
 
   void move()
@@ -28,10 +32,6 @@ class Ball
     {
       center.x += x_vel;
       x_vel = x_vel*(1-friction/speed);
-    }
-
-    if (speed > friction)
-    {
       center.y += y_vel;
       y_vel = y_vel*(1-friction/speed);
     }
@@ -55,6 +55,12 @@ class Ball
     strokeWeight(3);
     ellipse (center.x, center.y, rad*2, rad*2);
   }
+  void check_pockets()
+  {
+    
+    //if (center.x < 
+    
+  }
   void check_wall_collisions()
   {
     check_horizontal_walls();
@@ -70,12 +76,12 @@ class Ball
     //      This code readjusts the ball's position to increase accuracy at high speeds
     //      using trigonometry and interpolation.
     //
-    int border;  //  Wall border thickness
+    
     int wall = 0;    //  Wall position, y = 80 for the top wall and 
     //  y = height - 80 for the bottom wall
     float xp, yp; //  Previous x and y value before overshooting the wall.
 
-    border = 80;
+    
     if ( (center.y - rad < border) || (center.y + rad > (height - border)))
     {
       contact_point.x = center.x;  //  Same for horizontal wall collisions

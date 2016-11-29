@@ -9,7 +9,12 @@ void physics ()
 }
 void check_pockets()
 {
-  
+  table.cue_ball.check_pockets();
+  for (int i = 0; i < table.b_arr.length; i++)
+  {
+    table.b_arr[i].check_pockets();
+
+  }
   
   
 }
