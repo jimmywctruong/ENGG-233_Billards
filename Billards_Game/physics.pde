@@ -1,46 +1,34 @@
 void physics ()
 {
   // loop ball physics check
+   
   move_balls();
-  check_collisions(); // NEEDS TO USE TRIG
+  check_collisions();
   
 }
 
 void check_collisions()
 {
-  check_vertical_walls();
-  check_horizontal_walls();
-  
+  //check_vertical_walls();
+  //check_horizontal_walls();
+  table.cue_ball.check_wall_collisions();
 }
 void check_vertical_walls()
 {
-  if (table.cue_ball.center.x < 80 + table.cue_ball.rad)  //  Left Wall
+   if (table.cue_ball.center.x < 80 + table.cue_ball.rad)
   {
+    table.cue_ball.center.x = 80 + table.cue_ball.rad;
     table.cue_ball.x_vel *= -1;
-    table.cue_ball.center.x = 80+table.cue_ball.rad;
   }
-  if (table.cue_ball.center.x > width - (80 + table.cue_ball.rad))  //  Right Wall
+  if (table.cue_ball.center.x > width - (80 + table.cue_ball.rad))
   {
-    table.cue_ball.x_vel *= -1;
     table.cue_ball.center.x = width - (80 + table.cue_ball.rad);
+    table.cue_ball.x_vel *= -1;
   }
   
 }
 
-void check_horizontal_walls()
-{
-  if (table.cue_ball.center.y < 80 + table.cue_ball.rad)  //  Top Wall
-  {
-    table.cue_ball.y_vel *= -1;
-    table.cue_ball.center.y = 80+table.cue_ball.rad;
-  }
-  if (table.cue_ball.center.y > height - (80 + table.cue_ball.rad))  //  Bottom Wall
-  {
-    table.cue_ball.y_vel *= -1;
-    table.cue_ball.center.y = height - (80 + table.cue_ball.rad);
-  }
-  
-}
+
 
 void move_balls()
 {

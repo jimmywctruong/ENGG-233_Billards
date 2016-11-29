@@ -8,14 +8,14 @@ class Table
   Table (int balls)
   {
     
-    cue_ball = new Ball (30, 400, 400, 255);
+    cue_ball = new Ball (20, 400, 400, 255);
     b_arr = new Ball [balls];
     Stick st = new Stick ();
   }
   
   void draw()
   {
-    //draw_table();
+    draw_table();
     draw_balls();
     
   }
