@@ -9,5 +9,5 @@ void setup()
   frameRate(60);
   table = new Table (0);
   power = 5;
-  friction = 0.0005;
+  friction = 0.05;
 }
