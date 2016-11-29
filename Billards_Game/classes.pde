@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> refs/remotes/origin/main
 class Stick
 {
   Point start_p;
@@ -19,4 +22,6 @@ class Point
     x = a;
     y = b;
   }
+  
+  
 }
