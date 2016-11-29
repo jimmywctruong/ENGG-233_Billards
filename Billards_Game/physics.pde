@@ -3,15 +3,24 @@ void physics ()
   // loop ball physics check
    
   move_balls();
+  check_pockets();
   check_collisions();
   
 }
-
+void check_pockets()
+{
+  
+  
+  
+}
 void check_collisions()
 {
-  //check_vertical_walls();
-  //check_horizontal_walls();
   table.cue_ball.check_wall_collisions();
+  for (int i = 0; i < table.b_arr.length; i++)
+  {
+    table.b_arr[i].check_wall_collisions();
+
+  }
 }
 void check_vertical_walls()
 {
