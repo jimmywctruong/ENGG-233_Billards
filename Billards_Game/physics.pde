@@ -1,7 +1,7 @@
 void physics ()
 {
-  // loop ball physics check
-   
+  // ball physics looped by draw
+  
   move_balls();
   check_pockets();
   check_collisions();
@@ -15,8 +15,6 @@ void check_pockets()
     table.b_arr[i].check_pockets();
 
   }
-  
-  
 }
 void check_collisions()
 {
@@ -27,32 +25,13 @@ void check_collisions()
 
   }
 }
-void check_vertical_walls()
-{
-   if (table.cue_ball.center.x < 80 + table.cue_ball.rad)
-  {
-    table.cue_ball.center.x = 80 + table.cue_ball.rad;
-    table.cue_ball.x_vel *= -1;
-  }
-  if (table.cue_ball.center.x > width - (80 + table.cue_ball.rad))
-  {
-    table.cue_ball.center.x = width - (80 + table.cue_ball.rad);
-    table.cue_ball.x_vel *= -1;
-  }
-  
-}
-
-
 
 void move_balls()
 {
+  table.cue_ball.move();
   for (int i = 0; i < table.b_arr.length; i++)
   {
     table.b_arr[i].move();
     
-    
   }
-  
-  table.cue_ball.move();
-  
 }

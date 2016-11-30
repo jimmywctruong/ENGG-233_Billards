@@ -2,7 +2,7 @@ void draw()
 {
 
   table.draw();
-  draw_lines();
+  draw_tools();
   
   physics();
   
