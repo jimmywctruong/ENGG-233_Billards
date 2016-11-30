@@ -23,7 +23,7 @@ class Table
   void draw_table() 
   {
     float border = 60;
-    float hole = 60;
+    float hole = 100;
 
     draw_rect (border, hole);
     draw_taper (hole);

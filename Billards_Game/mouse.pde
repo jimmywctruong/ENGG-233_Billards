@@ -6,7 +6,11 @@ void mouseClicked()
 
 void mouseWheel(MouseEvent event)
 {
-  power -= 5*event.getCount();
+  power -= 1*event.getCount();
+  if(power < 0)
+  {
+    power = 0;
+  }
   println(power);
 }
 
@@ -21,6 +25,7 @@ void shoot_if()
                  
   if (hyp < table.cue_ball.rad)
   {
+    cue_hit.play(0);
     //println("shooting!");
 
     //  x_vel = power*cos(angle)

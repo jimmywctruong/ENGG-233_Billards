@@ -6,9 +6,9 @@ void draw()
   
   physics();
   
-  if (game_over)
+  if(game_over)
   {
-    
+    game_over();
   }
   //println(table.cue_ball.x_vel, table.cue_ball.y_vel);
 }
@@ -16,5 +16,5 @@ void draw()
 void game_over ()
 {
   println("Game Over");
-  
+  frameRate(0);
 }
