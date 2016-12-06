@@ -4,14 +4,18 @@ class Ball
   Point center;
   Point contact_point;
   color col;
+  float colr;
+  float colg;
+  float colb;
 
   float x_vel;
   float y_vel;
 
   //  Top left = 1, top right = 2, bottom left = 3, bottom right = 4
   int quadrant;  //  Used to skip unneccessary calculations
-  
-  boolean ignore_walls;
+
+  boolean pocketed;
+
 
   boolean is_moving;
 
@@ -24,54 +28,69 @@ class Ball
 
     x_vel = 0;
     y_vel = 0;
+    pocketed = false;
 
-    ignore_walls = false;
     update_quadrant();
-    
   }
-
+  void change_color()
+  {
+    float r = red(col);
+    float g = green(col);
+    float b = blue(col);
+    if (r > 0 || g > 0 || b > 0)
+    {
+      r -= 5;
+      g -= 5;
+      b -= 5;
+    }
+    col = color(r, g, b);
+  }
   void display () 
   {
     fill(col);
     stroke (0);
     strokeWeight(3);
-    ellipse (center.x, center.y, rad*2, rad*2);
+    ellipse ((int) center.x, (int) center.y, rad*2, rad*2);
   }
-
   void move()
+  {
+    center.x += x_vel;
+    center.y += y_vel;
+  }
+  void friction_move()
   {
     float speed = sqrt(x_vel*x_vel + y_vel*y_vel);
 
-    if (speed > friction)
+    if (speed >= friction)
     {
       is_moving = true;
 
       center.x += x_vel;
       center.y += y_vel;
-      
+
       //  New velocity = old velocity - old velocity * cos/sin of angle.
       //  x_vel = x_vel - friction * cos(angle) = x_vel - friction * (x_vel / speed)
       x_vel = x_vel*(1-friction/speed);
       y_vel = y_vel*(1-friction/speed);
-      
+
       update_quadrant();
-      
     } else 
     {
       is_moving = false;
     }
-    
   }
-  
+
+
+
   void update_quadrant()
   {
     int x_line = width/2;
     int y_line = height/2;
-    
-    if((center.x <= x_line) && (center.y <= y_line))
+
+    if ((center.x <= x_line) && (center.y <= y_line))
     {
       quadrant = 1; //  Top left
-    } else if((center.x > x_line) && (center.y <= y_line))
+    } else if ((center.x > x_line) && (center.y <= y_line))
     {
       quadrant = 2; //  Top right
     } else if ((center.x <= x_line) && (center.y > y_line))
@@ -83,32 +102,81 @@ class Ball
     }
   }
 
+  void stop(float x, float y)
+  {
+    center.x = x;
+    center.y = y;
+
+    x_vel = 0;
+    y_vel = 0;
+
+    pocketed = true;
+  }
   void check_pockets()
   {
-    stroke(255);
-    rect(border*.75, border*1.25, 2, 2);
-    rect(border, border*1.5, 2, 2);
-    
-    rect(border*1.25, border*.75, 2, 2);
-    rect(border*1.5, border, 2, 2);
-    
+    float m = 1.25; // Multiplier
+    float hm = hole*m; // Hole
     if (quadrant == 1)
     {
-      if ((center.x < border + 1.5*rad) && (center.y < border + 1.5*rad))
+      if (distance(center.x, center.y, hm, hm) <= rad)
       {
-        
-        ignore_walls = true;
-      } else 
-      {
-        ignore_walls = false;
+        stop(hm, hm);
       }
-            //rect(border, border, 2*table.cue_ball.rad, 2*table.cue_ball.rad);
+    } else if (quadrant == 2)
+    {
+      if (distance(center.x, center.y, width - hm, hm) <= rad)
+      {
+        stop(width - hm, hm);
+      }
+    } else if (quadrant == 3)
+    {
+      if (distance(center.x, center.y, hm, height - hm) <= rad)
+      {
+        stop(hm, height - hm);
+      }
+    } else if (quadrant == 4)
+    {
+      if (distance(center.x, center.y, width - hm, height - hm) <= rad)
+      {
+        stop(width - hm, height - hm);
+      }
+    } 
+
+    if (quadrant == 1 || quadrant == 2)
+    {
+
+      if (distance(center.x, center.y, width/2, hm) <= rad)
+      {
+        stop(width/2, hm);
+      }
+    } else if (quadrant == 3 || quadrant == 4)
+    {
+      if (distance(center.x, center.y, width/2, height - hm) <= rad)
+      {
+        stop( width/2, height - hm);
+      }
     }
+
+    //    Pockets Info
+    // void draw_holes (float hole)
+    //{
+    //  stroke(0, 0);
+    //  fill(0);
+    //  //  Draw Corner Holes
+    //  ellipse(hole*1.25, hole*1.25, hole, hole);
+    //  ellipse(width - hole*1.25, hole*1.25, hole, hole);
+    //  ellipse(hole*1.25, height - hole*1.25, hole, hole);
+    //  ellipse(width - hole*1.25, height - hole*1.25, hole, hole);
+    //  //  Draw Middle Holes
+    //  ellipse(width/2, hole, hole, hole);
+
+    //  ellipse(width/2, height -     hole, hole, hole);
+    //}
   }
 
   void check_wall_collisions()
   {
-    if (ignore_walls == false)
+    if (pocketed != true)
     {
       check_horizontal_walls();
       check_vertical_walls();
@@ -130,7 +198,7 @@ class Ball
     float xp, yp; //  Previous x and y value before overshooting the wall.
 
 
-    if ( (center.y - rad < border) || (center.y + rad > (height - border)))
+    if ( (center.y - rad <= border) || (center.y + rad >= (height - border)))
     {
       contact_point.x = center.x;  //  Same for horizontal wall collisions
 
@@ -143,11 +211,11 @@ class Ball
 
       y_vel *= -1;  //  Elastic Collision, y velocity reverses
 
-      if (center.y - rad < border)  //  Top Wall Collision
+      if (center.y - rad <= border)  //  Top Wall Collision
       {
         wall = border;   
         contact_point.y = center.y - rad;
-      } else if (center.y + rad > (height - border))  //  Bottom Wall Collision
+      } else if (center.y + rad >= (height - border))  //  Bottom Wall Collision
       {
         wall = height - border;
         contact_point.y = center.y + rad;
@@ -156,7 +224,7 @@ class Ball
       center.x = xp + (contact_point.x - xp)/(contact_point.y - yp)*(contact_point.y - wall);  //  Corrected x position based on interpolation
       center.y = yp + contact_point.y - wall;  //  Corrected y position
 
-
+      move();
 
       wall_hit.play(0);
     }
@@ -168,8 +236,8 @@ class Ball
     //  y = height - border for the bottom wall
     float xp, yp; //  Previous x and y value before overshooting the wall.
 
-    border = 80;
-    if ( (center.x - rad < border) || (center.x + rad > (width - border)))
+
+    if ( (center.x - rad <= border) || (center.x + rad >= (width - border)))
     {
       contact_point.y = center.y;  //  Same for vertical wall collisions
 
@@ -182,7 +250,7 @@ class Ball
 
       x_vel *= -1;  //  Elastic Collision, y velocity reverses
 
-      if (center.x - rad < border)  //  Left Wall Collision
+      if (center.x - rad <= border)  //  Left Wall Collision
       {
         wall = border;   
         contact_point.x = center.x - rad;

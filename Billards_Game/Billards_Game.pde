@@ -15,8 +15,13 @@ Table table;
 int power;
 float friction;
 int border;  //  Wall border thickness
+float hole;
+
+int start_time;
+int end_time;
 
 boolean game_over;
+int rad = 20;
 
 //http://www.zapsplat.com/music/miniature-snooker-or-pool-ball-drop-on-snooker-table/
 
@@ -24,19 +29,36 @@ void setup()
 {
   size(1600, 800);
   frameRate(60);
-    
+  cursor(CROSS);
+  
   sound_setup();
   
-  table = new Table (0); //  Table (# of balls)
+  set_global_vars();
+  start_game();
+  
+  
+  
+}
+void start_game()
+{
+  set_time();
+  table = new Table (6); //  Table (# of balls)
+  
+}
+void set_global_vars()
+{
   
   power = 5;
   border = 80;
   friction = 0.1;
-  
   game_over = false;
-  
+  hole = 80;
 }
-
+void set_time() 
+{
+  start_time = millis();
+  end_time = millis() + 2*60*1000;
+}
 void sound_setup()
 {
   minim = new Minim(this);
